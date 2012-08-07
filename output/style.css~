@@ -1,0 +1,48 @@
+body {
+    background-color: #336699;
+}
+
+header {
+    padding-bottom: 10px;
+    border-bottom: 3px dotted darkblue;
+    width: 900px;
+    margin: auto;
+}
+
+#title {
+    font-size: 130%;
+    text-align: center;
+}
+
+#subtitle {
+    text-align: center;
+}
+
+h1 {
+    color: #996633;
+    text-decoration: underline;
+    display: inline;
+}
+
+span[class="blog_subpost"] {
+    font-size: 70%;
+    font-style: italic;
+}
+
+p[class="post_content"] {
+    border: 1px solid black;
+    border-radius: 5px;
+
+    padding: 10px;
+}
+
+#page {
+    width: 900px;
+    margin: auto;
+    padding-bottom: 20px;
+    background-color: #CCCCCC;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-left: 5px dashed grey;
+    border-right: 5px dashed grey;
+}

@@ -1,0 +1,50 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use DBI;
+
+my %config = do 'CONFIG.pl';
+
+print $config{blog_title} . "\n" . $config{blog_subtitle} . "\n";
+print "Creating static blog...\n";
+print "=" x 20 . "\n";
+
+my $db = DBI->connect("dbi:SQLite:dbname=articles.db");
+my $fh;
+
+open $fh, "<", "start.template";
+my $start = "";
+while (<$fh>)
+{
+    $start .= $_;
+}
+close $fh;
+
+open $fh, "<", "end.template";
+my $end = "";
+while (<$fh>)
+{
+    $end .= $_;
+}
+close $fh;
+
+my $articles = $db->selectall_arrayref("SELECT * FROM articles ORDER BY id DESC");
+my $inside = "";
+
+foreach my $current (@$articles)
+{
+    my ($id, $title, $content, $date) = @$current;
+    $inside .= "\t\t\t<article>
+\t\t\t\t<h1 id='$id'>$title</h1>
+\t\t\t\t <span class=\"blog_subpost\">(Post #$id, posted on $date)</span>
+\t\t\t\t<p>\n$content\n\t\t\t\t</p>
+\t\t\t</article>\n<br/>\n";
+}
+
+$start =~ s/\${BLOG_TITLE}/$config{blog_title}/g;
+$start =~ s/\${BLOG_SUBTITLE}/$config{blog_subtitle}/g;
+$start =~ s/\${BLOG_AUTHOR}/$config{blog_author}/g;
+
+open $fh, ">", "output/index.html";
+print $fh $start . $inside . $end;

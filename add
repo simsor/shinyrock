@@ -1,0 +1,25 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use DBI;
+
+die "Usage: ./add Title" if scalar(@ARGV) < 1;
+
+my $db_articles = DBI->connect("dbi:SQLite:dbname=articles.db","","");
+
+system('$EDITOR /tmp/article_sr.txt');
+
+my $content = "";
+my $fh;
+open $fh, "<", "/tmp/article_sr.txt";
+while (<$fh>)
+{
+   $content .= $_;
+}
+close $fh;
+
+my $ins = $db_articles->prepare("INSERT INTO articles (title, content, date) VALUES (?, ?, date())");
+$ins->execute($ARGV[0], $content);
+
+system("rm /tmp/article_sr.txt");

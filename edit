@@ -1,0 +1,48 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use DBI;
+
+die "Usage: ./edit number" if scalar(@ARGV) < 1;
+
+my $db = DBI->connect("dbi:SQLite:dbname=articles.db");
+my $result = $db->selectall_arrayref("SELECT title, content FROM articles WHERE id=$ARGV[0]");
+
+my ($title, $content) = "";
+foreach my $current (@$result)
+{
+    ($title, $content) = @$current;
+}
+
+my $fh;
+open $fh, ">", "/tmp/article_sr.txt";
+print $fh $content;
+close $fh;
+
+system('$EDITOR /tmp/article_sr.txt');
+
+open $fh, "<", "/tmp/article_sr.txt";
+$content = "";
+while (<$fh>)
+{
+    $content .= $_;
+}
+close $fh;
+
+print "Do you want to change the title? [y/N] ";
+my $choice = <STDIN>;
+chomp $choice;
+
+if (lc($choice) eq "y")
+{
+    print "Current title: $title\n";
+    print "New title: ";
+    $title = <STDIN>;
+    chomp $title;
+}
+
+my $act = $db->prepare("UPDATE articles SET title=?, content=? WHERE id=?");
+$act->execute($title, $content, $ARGV[0]);
+
+print "\nUpdated\n";

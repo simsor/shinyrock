@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>${BLOG_TITLE}</title>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="author" content="${BLOG_AUTHOR}" />
+    <meta charset="utf-8" />
+  </head>
+  <body>
+
+    <div id="page">
+      <header><div id="title">${BLOG_TITLE}</div><div id="subtitle">${BLOG_SUBTITLE}</div></header>
+      <br/>
+

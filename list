@@ -1,0 +1,15 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use DBI;
+
+my $db_articles = DBI->connect("dbi:SQLite:dbname=articles.db");
+
+my $ret_articles = $db_articles->selectall_arrayref("SELECT id, title FROM articles");
+
+foreach my $current (@$ret_articles)
+{
+    my ($id, $title) = @$current;
+    print "#" . $id . ": ". $title . "\n";
+}

@@ -1,0 +1,11 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use DBI;
+
+die "Usage: ./del number" if scalar(@ARGV) < 1;
+my $db_articles = DBI->connect("dbi:SQLite:dbname=articles.db");
+
+$db_articles->do("DELETE FROM articles WHERE id=$ARGV[0]");
+
