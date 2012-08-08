@@ -1,10 +1,10 @@
 body {
-    background-color: #336699;
+    background-color: #E1E1E1;
 }
 
 header {
-    padding-bottom: 10px;
-    border-bottom: 3px dotted darkblue;
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
     width: 900px;
     margin: auto;
     margin-bottom: 20px;
@@ -20,9 +20,10 @@ header {
 }
 
 h1 {
-    color: #996633;
+    color: #885533;
     text-decoration: underline;
     display: inline;
+    text-shadow: 1px 1px 1px #C1C1C1;
 }
 
 span[class="blog_subpost"] {
@@ -42,9 +43,12 @@ p[class="post_content"] {
     margin: auto;
     padding-bottom: 20px;
     padding-top: 10px;
-    background-color: #CCCCCC;
+    /* background-color: #CCCCCC; */
+    background-color: #FFFFFF;
     padding-left: 25px;
     padding-right: 25px;
-    border-left: 5px dashed grey;
-    border-right: 5px dashed grey;
+/*  border-left: 5px dashed grey;
+    border-right: 5px dashed grey; */
+
+    box-shadow: 2px 2px 3px 2px #C1C1C1;
 }
