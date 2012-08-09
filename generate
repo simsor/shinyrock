@@ -35,11 +35,22 @@ my $inside = "";
 foreach my $current (@$articles)
 {
     my ($id, $title, $content, $date) = @$current;
+
+    open $fh, ">", "/tmp/current_article.output";
+    print $fh $content;
+    close $fh;
+
+    print "Markdown'ing article #$id...\n";
+    $content = `./Markdown.pl /tmp/current_article.output`;
+    system("rm /tmp/current_article.output");
+
     $inside .= "\t\t\t<article>
 \t\t\t\t<h1 id='$id'>$title</h1>
 \t\t\t\t <span class=\"blog_subpost\">(Post #$id, posted on $date)</span>
 \t\t\t\t<p>\n$content\n\t\t\t\t</p>
 \t\t\t</article>\n<br/>\n";
+
+    print "Finished generating article #$id.\n";
 }
 
 $start =~ s/\${BLOG_TITLE}/$config{blog_title}/g;
@@ -48,3 +59,5 @@ $start =~ s/\${BLOG_AUTHOR}/$config{blog_author}/g;
 
 open $fh, ">", "output/index.html";
 print $fh $start . $inside . $end;
+
+print "\nFinished.\n";
